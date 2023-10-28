@@ -17,7 +17,7 @@ from flask_login import login_user, login_required
 from flask_login import logout_user, current_user, LoginManager, UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from Crypto.Cipher import AES
-from justwatch import JustWatch
+# from justwatch import JustWatch --- NOT WORKING
 
 
 # Identifies our database file.
@@ -63,12 +63,23 @@ class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     imdb_id = db.Column(db.String(100), nullable=False)
     imdb_rating = db.Column(db.Float, nullable=False)
+    user_rating = db.Column(db.Float, nullable=False)
     name = db.Column(db.String(500), nullable=False)
     adult = db.Column(db.Boolean, nullable=False)
     runtime = db.Column(db.Integer, nullable=False)
     genres = db.Column(db.String(500), nullable=False)
     summary = db.Column(db.String(5000), nullable=False)
+    watched = db.Column(db.Boolean, nullable=False)
 
+    """Initializes a new instance of the class"""
+    def __init__(self, imdb_id, imdb_rating, name, adult, runtime, genres, watched):
+        self.imdb_id = imdb_id
+        self.imdb_rating = imdb_rating
+        self.name = name
+        self.adult = adult
+        self.runtime = runtime
+        self.genres = genres
+        self.watched = watched
 
 with app.app_context():
     db.create_all()
@@ -162,7 +173,7 @@ def index_page():
         data = request.get_json()
 
         new_username = data.get('name')
-        new_password = data.get('password')
+        new_password = encrypt_text(data.get('password'))
         new_email_address = data.get('email')
 
         new_rec = User(new_username, new_password,
