@@ -5,6 +5,7 @@
 # bcrypt
 # flask_sqlalchemy
 # pycryptodome
+# JustWatch
 
 import base64
 import datetime
@@ -16,6 +17,7 @@ from flask_login import login_user, login_required
 from flask_login import logout_user, current_user, LoginManager, UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from Crypto.Cipher import AES
+from justwatch import JustWatch
 
 
 # Identifies our database file.
@@ -34,7 +36,7 @@ app.config['SECRET_KEY'] = 'WeAreVeryMagical1357913'
 # Call the db
 db = SQLAlchemy(app)
 
-
+just_watch = JustWatch(country='US')
 
 with app.app_context():
     if not path.exists(DB_NAME):
@@ -55,6 +57,17 @@ class User(UserMixin, db.Model):
         self.password = password
         self.email_address = email_address
         self.user_interests = user_interests
+
+class Movie(db.Model):
+    """Creates the Movie table in the database."""
+    id = db.Column(db.Integer, primary_key=True)
+    imdb_id = db.Column(db.String(100), nullable=False)
+    imdb_rating = db.Column(db.Float, nullable=False)
+    name = db.Column(db.String(500), nullable=False)
+    adult = db.Column(db.Boolean, nullable=False)
+    runtime = db.Column(db.Integer, nullable=False)
+    genres = db.Column(db.String(500), nullable=False)
+    summary = db.Column(db.String(5000), nullable=False)
 
 
 with app.app_context():
