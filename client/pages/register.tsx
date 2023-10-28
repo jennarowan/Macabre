@@ -40,7 +40,7 @@ export default function signup() {
   };
 
   return (
-    <div className="h-screen flex flex-col items-center justify-center pt-20 bg-[#000000]">
+    <div className="bg-[url('../images/register-background.png')] bg-cover bg-center h-screen">
       <div className="border border-solid border-white bg-gradient-1 flex flex-col items-center justify-center p-8 rounded-lg w-[35%] h-[55vh]">
         <h1 className="text-4xl font-bold mb-8 text-white  uppercase">
           Register
