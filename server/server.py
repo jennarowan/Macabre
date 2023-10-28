@@ -166,7 +166,7 @@ def login():
 
 @app.route('/api/register', methods=['POST', 'GET'])
 @cross_origin()
-def index_page():
+def register():
 
     if request.method == 'POST':
 
