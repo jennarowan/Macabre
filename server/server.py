@@ -1,7 +1,10 @@
 # flask
 # Flask-Cors
-# Flask-Login
+# pip install git+https://github.com/maxcountryman/flask-login.git
 # pybase64
+# bcrypt
+# flask_sqlalchemy
+# pycryptodome
 
 import base64
 import datetime
@@ -172,5 +175,5 @@ def index_page():
 
 login_manager.init_app(app)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True, port=8080)
